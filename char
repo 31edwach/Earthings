@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pretty Petals Jewelry</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffd9e8;
+        margin: 0;
+        padding: 0;
+        color: #5a0049;
+    }
+    header {
+        background-color: #ffb3d9;
+        padding: 20px;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    section {
+        padding: 30px;
+        margin: 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 10px #ff9ecb;
+    }
+    h2 {
+        color: #b30086;
+    }
+    button {
+        background: #ff93c6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #ff73b7;
+    }
+    .result {
+        margin-top: 15px;
+        padding: 10px;
+        background: #ffe3f2;
+        border-radius: 10px;
+        font-weight: bold;
+        color: #7a0061;
+    }
+</style>
+</head>
+
+<body>
+
+<header>Pretty Petals Jewelry Shop</header>
+
+<!-- Prices Section -->
+<section>
+    <h2>💎 Prices</h2>
+    <p>All earrings cost <strong>$7 per pair</strong>.</p>
+    <ul>
+        <li>Daisies Dangle</li>
+        <li>Seasonal Sky</li>
+        <li>Rosebud Radiance</li>
+        <li>Sunflower Spark</li>
+        <li>Evergreen Enchantment</li>
+        <li>Mistletoe Kiss</li>
+        <li>Frozen Orchid</li>
+        <li>Midnight Holly</li>
+    </ul>
+</section>
+
+<!-- Creation Section -->
+<section>
+    <h2>🛠️ How We Create Our Earrings</h2>
+    <p>
+        All of our earrings are crafted using high-precision <strong>3D printers</strong>.  
+        We design each piece digitally, then print the base shape with durable, lightweight materials.  
+        After printing, each earring is hand-painted, decorated, and sealed for long-lasting beauty.
+    </p>
+</section>
+
+<!-- Earring Test Section -->
+<section>
+    <h2>🎀 Find Your Perfect Earring Test</h2>
+
+    <label>Race / Skin Tone:</label><br>
+    <select id="skin">
+        <option value="">-- select --</option>
+        <option value="white">White</option>
+        <option value="lightbrown">Light Brown / Caramel</option>
+        <option value="darkbrown">Dark Brown</option>
+    </select>
+    <br><br>
+
+    <label>Hair Color:</label><br>
+    <select id="hair">
+        <option value="">-- select --</option>
+        <option value="blonde">Blonde</option>
+        <option value="brown">Brown</option>
+        <option value="black">Black</option>
+        <option value="red">Red</option>
+    </select>
+    <br><br>
+
+    <label>Favorite Color:</label><br>
+    <input id="favorite" type="text" placeholder="ex: pink, blue, mint, lavender">
+    <br><br>
+
+    <button onclick="findEarring()">Find My Style!</button>
+    <div id="result" class="result"></div>
+</section>
+
+<script>
+function findEarring() {
+    let skin = document.getElementById("skin").value;
+    let hair = document.getElementById("hair").value;
+
+    let metalChoice = "";
+
+    // Skin tone rules
+    if (skin === "white" || skin === "lightbrown") {
+        metalChoice = "Gold";
+    } else if (skin === "darkbrown") {
+        metalChoice = "Silver";
+    }
+
+    // Hair color rules (can override skin tone)
+    if (hair === "blonde" || hair === "brown") {
+        metalChoice = "Gold";
+    }
+    if (hair === "black" || hair === "red") {
+        metalChoice = "Silver";
+    }
+
+    document.getElementById("result").innerHTML =
+        "Your perfect earring color is: <strong>" + metalChoice + "</strong>!";
+}
+</script>
+
+<!-- How to Buy -->
+<section>
+    <h2>🛍️ How to Buy</h2>
+    <p>
+        To place an order:
+        <ol>
+            <li>Choose your favorite earring style.</li>
+            <li>Send us a message with your selection.</li>
+            <li>We confirm and ship your earrings!</li>
+        </ol>
+        Each pair costs <strong>$7</strong>, and you can mix & match all designs.
+    </p>
+</section>
+
+</body>
+</html>
