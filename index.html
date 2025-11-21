@@ -13,6 +13,28 @@
         padding: 0;
         color: #5a0049;
     }
+
+    /* Navigation Bar */
+    nav {
+        background-color: #ffb3d9;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        font-size: 1.1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    nav a {
+        color: #5a0049;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    nav a:hover {
+        text-decoration: underline;
+    }
+
     header {
         background-color: #ffb3d9;
         padding: 20px;
@@ -20,6 +42,7 @@
         font-size: 2rem;
         font-weight: bold;
     }
+
     section {
         padding: 30px;
         margin: 20px;
@@ -27,10 +50,12 @@
         border-radius: 15px;
         box-shadow: 0 0 10px #ff9ecb;
     }
+
     h2 {
         color: #b30086;
         margin-top: 0;
     }
+
     button {
         background: #ff93c6;
         color: white;
@@ -43,6 +68,7 @@
     button:hover {
         background: #ff73b7;
     }
+
     .result {
         margin-top: 15px;
         padding: 10px;
@@ -51,15 +77,26 @@
         font-weight: bold;
         color: #7a0061;
     }
+
 </style>
 </head>
 
 <body>
 
-<header>Pretty Petals Jewelry Shop</header>
+<!-- NAVIGATION BAR -->
+<nav>
+    <a href="#home">Home</a>
+    <a href="#prices">Prices</a>
+    <a href="#creation">How We Create</a>
+    <a href="#earringtest">Earring Color Test</a>
+    <a href="#stylequiz">Style Quiz</a>
+    <a href="#buy">How to Buy</a>
+</nav>
 
-<!-- Prices Section -->
-<section>
+<header id="home">Pretty Petals Jewelry Shop</header>
+
+<!-- PRICES SECTION -->
+<section id="prices">
     <h2>💎 Prices</h2>
     <p>All earrings cost <strong>$7 per pair</strong>.</p>
     <ul>
@@ -74,19 +111,18 @@
     </ul>
 </section>
 
-<!-- Creation Section -->
-<section>
+<!-- CREATION SECTION -->
+<section id="creation">
     <h2>🛠️ How We Create Our Earrings</h2>
     <p>
-        All of our earrings are made using high-precision <strong>3D printers</strong>.<br><br>
-        Each design is digitally modeled, then printed with lightweight resin.  
-        After printing, we hand-paint, decorate, and seal each pair to give them their unique charm.
+        All of our earrings are made using high-precision <strong>3D printers</strong>.  
+        Each design is digitally modeled, printed with lightweight resin, hand-painted, and sealed with care.
     </p>
 </section>
 
-<!-- Earring Test Section -->
-<section>
-    <h2>🎀 Find Your Perfect Earring Test</h2>
+<!-- COLOR EARRING TEST -->
+<section id="earringtest">
+    <h2>🎀 Find Your Perfect Earring Color</h2>
 
     <label>Race / Skin Tone:</label><br>
     <select id="skin">
@@ -94,8 +130,7 @@
         <option value="white">White</option>
         <option value="lightbrown">Light Brown / Caramel</option>
         <option value="darkbrown">Dark Brown</option>
-    </select>
-    <br><br>
+    </select><br><br>
 
     <label>Hair Color:</label><br>
     <select id="hair">
@@ -104,15 +139,11 @@
         <option value="brown">Brown</option>
         <option value="black">Black</option>
         <option value="red">Red</option>
-    </select>
-    <br><br>
+    </select><br><br>
 
-    <label>Favorite Color:</label><br>
-    <input id="favorite" type="text" placeholder="ex: pink, blue, mint, lavender">
-    <br><br>
+    <input id="favorite" type="text" placeholder="Favorite color"><br><br>
 
     <button onclick="findEarring()">Find My Style!</button>
-
     <div id="result" class="result"></div>
 </section>
 
@@ -123,25 +154,15 @@ function findEarring() {
 
     let metalChoice = "";
 
-    // Skin tone rules
-    if (skin === "white" || skin === "lightbrown") {
-        metalChoice = "Gold";
-    } else if (skin === "darkbrown") {
-        metalChoice = "Silver";
-    }
+    if (skin === "white" || skin === "lightbrown") metalChoice = "Gold";
+    if (skin === "darkbrown") metalChoice = "Silver";
 
-    // Hair color rules (override when needed)
-    if (hair === "blonde" || hair === "brown") {
-        metalChoice = "Gold";
-    }
-    if (hair === "black" || hair === "red") {
-        metalChoice = "Silver";
-    }
+    if (hair === "blonde" || hair === "brown") metalChoice = "Gold";
+    if (hair === "black" || hair === "red") metalChoice = "Silver";
 
-    // Output
     if (!skin || !hair) {
         document.getElementById("result").innerHTML =
-            "Please complete all fields for the best result!";
+            "Please complete all fields.";
         return;
     }
 
@@ -150,13 +171,184 @@ function findEarring() {
 }
 </script>
 
-<!-- How to Buy -->
-<section>
+<!-- STYLE QUIZ SECTION -->
+<section id="stylequiz">
+    <h2>💖 15-Question Style Personality Quiz</h2>
+
+    <div id="quiz"></div>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+
+    <div id="quizResult" class="result"></div>
+</section>
+
+<script>
+// PERSONALITY TYPES
+const types = [
+    "Soft Girl", "Girly Girl", "Sporty Girl", "Baddie / Bold One",
+    "Vintage Girl", "Cottagecore Girl", "Glam Girl", "Minimalist Girl",
+    "Artsy Girl", "Skater Girl", "The Diva", "The Trendsetter",
+    "The Chaos Queen", "The Quiet Genius", "The Dreamer",
+    "The Rebel", "The Golden Girl"
+];
+
+let questions = [
+    // Q1 Name
+    {
+        q: "What is your first name?",
+        type: "name",
+    },
+
+    // Q2 Favorite color
+    {
+        q: "What is your favorite color?",
+        options: ["Red", "Yellow", "Orange", "Green", "Blue", "Purple", "Pink", "White", "Other"],
+        scores: [2,2,2,2,3,3,3,3,4]
+    },
+
+    // Q3
+    {
+        q: "Pick a weekend activity:",
+        options: ["Reading", "Sports", "Shopping", "Relaxing", "Art"],
+        scores: [14,3,7,1,9]
+    },
+
+    // Q4
+    {
+        q: "Which vibe fits you?",
+        options: ["Soft", "Bold", "Elegant", "Vintage", "Cozy"],
+        scores: [0,3,6,4,5]
+    },
+
+    // Q5
+    {
+        q: "Pick an accessory:",
+        options: ["Scrunchie", "Baseball Cap", "Pearl Necklace", "Rings", "Bracelet"],
+        scores: [0,2,6,3,7]
+    },
+
+    // Q6
+    {
+        q: "Pick a season:",
+        options: ["Spring", "Summer", "Fall", "Winter"],
+        scores: [5,3,4,6]
+    },
+
+    // Q7
+    {
+        q: "Pick a pattern:",
+        options: ["Floral", "Plaid", "Animal Print", "Minimalist", "Hearts"],
+        scores: [5,4,3,7,0]
+    },
+
+    // Q8
+    {
+        q: "Pick a song vibe:",
+        options: ["Chill", "Pop", "Rock", "Indie", "Rap"],
+        scores: [0,7,3,9,2]
+    },
+
+    // Q9
+    {
+        q: "Pick an aesthetic:",
+        options: ["Cottagecore", "Baddie", "Girly", "Sporty", "Vintage"],
+        scores: [5,3,1,2,4]
+    },
+
+    // Q10
+    {
+        q: "Pick a movie type:",
+        options: ["Romantic", "Comedy", "Action", "Fantasy", "Drama"],
+        scores: [1,0,3,14,6]
+    },
+
+    // Q11
+    {
+        q: "Pick a dessert:",
+        options: ["Cake", "Cookies", "Chocolate", "Fruit", "Ice Cream"],
+        scores: [1,0,3,5,6]
+    },
+
+    // Q12
+    {
+        q: "Pick a drink:",
+        options: ["Tea", "Soda", "Coffee", "Juice", "Water"],
+        scores: [5,3,6,1,7]
+    },
+
+    // Q13
+    {
+        q: "Pick your dream room:",
+        options: ["Pink & Floral", "Black & Neon", "White & Minimalist", "Cozy Warm Tones", "Colorful Art Wall"],
+        scores: [0,3,7,5,9]
+    },
+
+    // Q14
+    {
+        q: "Pick a hobby:",
+        options: ["Drawing", "Dancing", "Studying", "Sports", "Shopping"],
+        scores: [9,3,14,2,7]
+    },
+
+    // Q15
+    {
+        q: "Pick a pet:",
+        options: ["Cat", "Dog", "Fish", "Bunny", "No pets"],
+        scores: [0,3,14,5,7]
+    }
+];
+
+// DISPLAY QUIZ
+let quizHTML = "";
+questions.forEach((q, i) => {
+    if (q.type === "name") {
+        quizHTML += `
+            <p><strong>${i+1}. ${q.q}</strong></p>
+            <input type="text" id="q${i}">
+        `;
+    } else {
+        quizHTML += `<p><strong>${i+1}. ${q.q}</strong></p>`;
+        q.options.forEach((opt, j) => {
+            quizHTML += `
+            <label>
+                <input type="radio" name="q${i}" value="${j}">
+                ${opt}
+            </label><br>`;
+        });
+    }
+});
+document.getElementById("quiz").innerHTML = quizHTML;
+
+// SUBMIT QUIZ
+function submitQuiz() {
+    let total = 0;
+
+    questions.forEach((q, i) => {
+        if (q.type === "name") {
+            let name = document.getElementById("q" + i).value.trim();
+            if (!name) return;
+
+            let first = name[0].toUpperCase();
+            if (first >= "A" && first <= "M") total += 3;
+            else total += 6;
+        } else {
+            let selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected) total += q.scores[selected.value];
+        }
+    });
+
+    let typeIndex = total % types.length;
+    document.getElementById("quizResult").innerHTML =
+        "Your style type is: <strong>" + types[typeIndex] + "</strong>!";
+}
+</script>
+
+<!-- HOW TO BUY -->
+<section id="buy">
     <h2>🛍️ How to Buy</h2>
     <ol>
-        <li>Choose your favorite earring style.</li>
-        <li>Send us a message with the name of the pair.</li>
-        <li>We send confirmation and ship your earrings!</li>
+        <li>Pick your favorite earring style.</li>
+        <li>Send us a message with the pair name.</li>
+        <li>We confirm your order & ship it!</li>
     </ol>
     <p>Each pair costs <strong>$7</strong>.</p>
 </section>
