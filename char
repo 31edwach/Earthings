@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pretty Petals Jewelry</title>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -27,6 +29,7 @@
     }
     h2 {
         color: #b30086;
+        margin-top: 0;
     }
     button {
         background: #ff93c6;
@@ -75,9 +78,9 @@
 <section>
     <h2>🛠️ How We Create Our Earrings</h2>
     <p>
-        All of our earrings are crafted using high-precision <strong>3D printers</strong>.  
-        We design each piece digitally, then print the base shape with durable, lightweight materials.  
-        After printing, each earring is hand-painted, decorated, and sealed for long-lasting beauty.
+        All of our earrings are made using high-precision <strong>3D printers</strong>.<br><br>
+        Each design is digitally modeled, then printed with lightweight resin.  
+        After printing, we hand-paint, decorate, and seal each pair to give them their unique charm.
     </p>
 </section>
 
@@ -109,6 +112,7 @@
     <br><br>
 
     <button onclick="findEarring()">Find My Style!</button>
+
     <div id="result" class="result"></div>
 </section>
 
@@ -126,12 +130,19 @@ function findEarring() {
         metalChoice = "Silver";
     }
 
-    // Hair color rules (can override skin tone)
+    // Hair color rules (override when needed)
     if (hair === "blonde" || hair === "brown") {
         metalChoice = "Gold";
     }
     if (hair === "black" || hair === "red") {
         metalChoice = "Silver";
+    }
+
+    // Output
+    if (!skin || !hair) {
+        document.getElementById("result").innerHTML =
+            "Please complete all fields for the best result!";
+        return;
     }
 
     document.getElementById("result").innerHTML =
@@ -142,15 +153,12 @@ function findEarring() {
 <!-- How to Buy -->
 <section>
     <h2>🛍️ How to Buy</h2>
-    <p>
-        To place an order:
-        <ol>
-            <li>Choose your favorite earring style.</li>
-            <li>Send us a message with your selection.</li>
-            <li>We confirm and ship your earrings!</li>
-        </ol>
-        Each pair costs <strong>$7</strong>, and you can mix & match all designs.
-    </p>
+    <ol>
+        <li>Choose your favorite earring style.</li>
+        <li>Send us a message with the name of the pair.</li>
+        <li>We send confirmation and ship your earrings!</li>
+    </ol>
+    <p>Each pair costs <strong>$7</strong>.</p>
 </section>
 
 </body>
